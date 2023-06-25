@@ -3,7 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   location: "",
   locationOptions: [],
-  cafeIdToDelete: ""
+  cafeIdToDelete: "",
+  cafeFormValues: {
+    name: "",
+    description: "",
+    location: ""
+  }
 };
 
 export const cafeSlice = createSlice({
@@ -18,11 +23,18 @@ export const cafeSlice = createSlice({
     },
     setCafeIdToDelete: (state, action) => {
       state.cafeIdToDelete = action.payload;
+    },
+    setCafeFormValues: (state, action) => {
+      state.cafeFormValues = { ...action.payload };
     }
   }
 });
 
-export const { setLocation, setLocationOptions, setCafeIdToDelete } =
-  cafeSlice.actions;
+export const {
+  setLocation,
+  setLocationOptions,
+  setCafeIdToDelete,
+  setCafeFormValues
+} = cafeSlice.actions;
 
 export default cafeSlice.reducer;

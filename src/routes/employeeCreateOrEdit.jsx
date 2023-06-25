@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { POST, PUT, VALID_GENDERS } from "../constants";
+import { ALL, POST, PUT, VALID_GENDERS } from "../constants";
 import { setEmployeeFormValues } from "../employees/employeeSlice";
 import {
   useCreateOrEditEmployeeMutation,
@@ -17,6 +17,7 @@ import { centeredBox, customInputStyles } from "../components/styles";
 import CustomInput from "../components/CustomInput";
 import CafeSelect from "../components/CafeSelect";
 import ReusableBtn from "../components/ReusableBtn";
+import { useGetCafesByLocationQuery } from "../services/cafes";
 
 const EmployeeCreateOrEdit = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const EmployeeCreateOrEdit = () => {
   const { employeeId } = useParams();
   const { data: employees, isLoading: isEmployeesLoading } =
     useGetEmployeesByCafeQuery("");
+  const { refetch: refetchCafes } = useGetCafesByLocationQuery(ALL);
   const [createOrEditEmployee] = useCreateOrEditEmployeeMutation({});
   const navigate = useNavigate();
 
@@ -77,7 +79,7 @@ const EmployeeCreateOrEdit = () => {
 
   const isFormInvalid = () => checkFormErrors();
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = async () => {
     const method = employeeId ? PUT : POST;
 
     createOrEditEmployee({
@@ -91,6 +93,8 @@ const EmployeeCreateOrEdit = () => {
       },
       method
     });
+
+    await refetchCafes(ALL);
 
     navigate("/employees");
   };
