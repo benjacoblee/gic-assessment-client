@@ -1,7 +1,12 @@
-import CafeForm from "../components/CafeForm";
+import { Box, Container } from "@mui/material";
+import { centeredBox } from "../components/styles";
 
-const CafeCreateOrEdit = () => {
-  return <CafeForm />;
+const CafeForm = () => {
+  return (
+    <Container sx={{ height: "100vh" }}>
+      <Box sx={centeredBox}>Cafe Form</Box>
+    </Container>
+  );
 };
 
-export default CafeCreateOrEdit;
+export default CafeForm;
