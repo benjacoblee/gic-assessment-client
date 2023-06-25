@@ -5,16 +5,22 @@ import { AgGridReact } from "ag-grid-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setLocation,
   setCafeIdToDelete,
+  setLocation,
   setLocationOptions
 } from "../cafe/cafeSlice";
-import ReusableBtn from "../components/ReusableBtn";
 import DeleteModal from "../components/DeleteModal";
 import EmployeeLink from "../components/EmployeeLink";
 import LocationSelect from "../components/LocationSelect";
-import { CAFE_ENTITY } from "../constants";
+import ReusableBtn from "../components/ReusableBtn";
+import {
+  aggridCardContainer,
+  centeredBox,
+  locationOptionsBox
+} from "../components/styles";
+import { ALL, CAFE_ENTITY } from "../constants";
 import { useGetCafesByLocationQuery } from "../services/cafes";
+import { mapLocationOptions } from "../utils";
 
 const Cafes = () => {
   const dispatch = useDispatch();
@@ -27,16 +33,14 @@ const Cafes = () => {
 
   useEffect(() => {
     if (cafesByLocation) {
-      const options = [{ location: "All" }, ...cafesByLocation].map(
-        (cafe) => cafe.location
-      );
+      const options = mapLocationOptions(cafesByLocation);
       dispatch(setLocationOptions(Array.from(new Set(options))));
     }
   }, [cafesByLocation, dispatch]);
 
   useEffect(() => {
-    if (!locationOptions.includes("All")) {
-      dispatch(setLocation("All"));
+    if (!locationOptions.includes(ALL)) {
+      dispatch(setLocation(ALL));
     }
   }, [locationOptions, dispatch]);
 
@@ -48,7 +52,7 @@ const Cafes = () => {
     { field: "employees", cellRenderer: EmployeeLink },
     {
       field: "edit",
-      cellRenderer: (params) => (
+      cellRenderer: () => (
         <ReusableBtn variant="contained" color="info" btnText="Edit" />
       )
     },
@@ -70,31 +74,19 @@ const Cafes = () => {
 
   return (
     <Container sx={{ height: "100vh" }}>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%"
-        }}
-      >
-        <Card
-          sx={{
-            width: "100%",
-            padding: 2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          }}
-        >
+      <Box sx={centeredBox}>
+        <Card sx={aggridCardContainer}>
           <h1>Cafes</h1>
           <DeleteModal
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             entity={CAFE_ENTITY}
           />
-          {!isLoading && locationOptions?.length ? <LocationSelect /> : null}
+          {!isLoading && locationOptions?.length ? (
+            <Box sx={locationOptionsBox}>
+              <LocationSelect />
+            </Box>
+          ) : null}
           {!isLoading && cafesByLocation?.length ? (
             <Box
               className="ag-theme-alpine"
