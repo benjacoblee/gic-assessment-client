@@ -23,9 +23,27 @@ export const employeesApi = createApi({
         });
       },
       invalidatesTags: ["Cafe", "Employee"]
+    }),
+    createOrEditEmployee: build.mutation({
+      async queryFn(data) {
+        const { data: employeeData, method } = data;
+
+        return await fetch(`/api/employee`, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          method,
+          body: JSON.stringify(employeeData)
+        });
+      },
+      invalidatesTags: ["Cafe", "Employee"]
     })
   })
 });
 
-export const { useGetEmployeesByCafeQuery, useDeleteEmployeeMutation } =
-  employeesApi;
+export const {
+  useGetEmployeesByCafeQuery,
+  useDeleteEmployeeMutation,
+  useCreateOrEditEmployeeMutation
+} = employeesApi;

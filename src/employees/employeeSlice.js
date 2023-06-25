@@ -2,7 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   employees: [],
-  employeeIdToDelete: ""
+  employeeIdToDelete: "",
+  employeeFormValues: {
+    name: "",
+    email_address: "",
+    phone_number: "",
+    gender: "",
+    cafe: {}
+  }
 };
 
 export const employeesSlice = createSlice({
@@ -11,10 +18,14 @@ export const employeesSlice = createSlice({
   reducers: {
     setEmployeeIdToDelete: (state, action) => {
       state.employeeIdToDelete = action.payload;
+    },
+    setEmployeeFormValues: (state, action) => {
+      state.employeeFormValues = action.payload;
     }
   }
 });
 
-export const { setEmployees, setEmployeeIdToDelete } = employeesSlice.actions;
+export const { setEmployeeIdToDelete, setEmployeeFormValues } =
+  employeesSlice.actions;
 
 export default employeesSlice.reducer;
