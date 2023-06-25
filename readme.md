@@ -1,10 +1,24 @@
-# Readme
+# GIC Assessment
 
-### Running the project
+### Description
 
-> prerequisites: database must be running at localhost:3000
+- An app for cafe & employee management
 
-To run:
+### Technologies Used
 
-- `npm install`
+#### Client
+
+- React
+- Redux + Redux Toolkit
+- Material UI
+
+### Installation and Usage
+
+> This project uses `Node.js` version `16`
+
+- Clone the repository
+- Navigate to the repository
+- Ensure `node_modules` with `npm i`
 - `npm run dev`
+
+Navigate to `http://localhost:5173/` to view the project in the browser.
