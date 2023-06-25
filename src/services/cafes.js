@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { ALL } from "../constants";
 
 export const cafesApi = createApi({
   reducerPath: "cafesApi",
@@ -7,7 +8,7 @@ export const cafesApi = createApi({
   endpoints: (build) => ({
     getCafesByLocation: build.query({
       query: (location) => {
-        if (location === "All") {
+        if (location === ALL) {
           return `?location=`;
         }
         return `?location=${location}`;
