@@ -176,9 +176,7 @@ const EmployeeCreateOrEdit = () => {
               color="info"
               btnText="Submit"
               disabled={isFormInvalid()}
-            >
-              Submit
-            </ReusableBtn>
+            />
           </Box>
         </Box>
       )}
