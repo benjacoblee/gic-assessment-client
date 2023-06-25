@@ -1,19 +1,20 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Box, Modal, Typography } from "@mui/material";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { setLocation, setCafeIdToDelete } from "../cafe/cafeSlice";
+import { setCafeIdToDelete, setLocation } from "../cafe/cafeSlice";
+import { ALL, EMPLOYEE_ENTITY } from "../constants";
 import { setEmployeeIdToDelete } from "../employees/employeeSlice";
 import {
-  useGetCafesByLocationQuery,
-  useDeleteCafeMutation
+  useDeleteCafeMutation,
+  useGetCafesByLocationQuery
 } from "../services/cafes";
 import {
-  useGetEmployeesByCafeQuery,
-  useDeleteEmployeeMutation
+  useDeleteEmployeeMutation,
+  useGetEmployeesByCafeQuery
 } from "../services/employees";
 import ReusableBtn from "./ReusableBtn";
-import { EMPLOYEE_ENTITY } from "../constants";
+import { mainBoxStyles } from "./deleteModalStyles";
 
 const DeleteModal = ({ isOpen, setIsOpen, entity }) => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const DeleteModal = ({ isOpen, setIsOpen, entity }) => {
   const handleDeleteCafe = async () => {
     await deleteCafe(cafeIdToDelete)
       .then(() => {
-        dispatch(setLocation("All"));
+        dispatch(setLocation(ALL));
       })
       .then(() => {
         refetchCafes();
@@ -51,24 +52,8 @@ const DeleteModal = ({ isOpen, setIsOpen, entity }) => {
   };
 
   return (
-    <Modal
-      open={isOpen}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: 400,
-          bgcolor: "background.paper",
-          border: "2px solid #000",
-          boxShadow: 24,
-          p: 4
-        }}
-      >
+    <Modal open={isOpen}>
+      <Box sx={mainBoxStyles}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Delete {entity}
         </Typography>
