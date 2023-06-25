@@ -1,7 +1,9 @@
-import { Box, Button, MenuItem, Select } from "@mui/material";
+import { Box, MenuItem, Select } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { setLocation } from "../cafe/cafeSlice";
 import { useGetCafesByLocationQuery } from "../services/cafes";
+import ReusableBtn from "./ReusableBtn";
 
 const LocationSelect = () => {
   const dispatch = useDispatch();
@@ -11,26 +13,14 @@ const LocationSelect = () => {
 
   const handleLocationChange = async (e) => {
     const newLocation = e.target.value;
-
-    new Promise((resolve) => {
-      dispatch(setLocation(newLocation));
-      resolve();
-    }).then(async () => {
-      await refetchCafes(location);
-    });
+    dispatch(setLocation(newLocation));
+    await refetchCafes(location);
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        marginBottom: 4,
-        display: "flex",
-        justifyContent: "flex-end"
-      }}
-    >
+    <>
       <Select
-        sx={{ width: "50%", marginRight: 2 }}
+        sx={{ width: "50%" }}
         value={location}
         onChange={handleLocationChange}
       >
@@ -43,11 +33,12 @@ const LocationSelect = () => {
         })}
       </Select>
       <Box>
-        <Button sx={{ height: "100%" }} variant="contained" color="info">
-          Add New Cafe
-        </Button>
+        <Link to="/">
+          <ReusableBtn variant="outlined" btnText="Go back" sx={{ mr: 2 }} />
+        </Link>
+        <ReusableBtn variant="contained" color="info" btnText="Add New Cafe" />
       </Box>
-    </Box>
+    </>
   );
 };
 
