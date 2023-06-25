@@ -72,7 +72,7 @@ const CafeForm = () => {
     return areRequiredFieldsEmpty;
   };
 
-  const isFormInvalid = () => checkFormErrors();
+  const isFormInvalid = checkFormErrors();
 
   const handleFormSubmit = async () => {
     const method = cafeId ? PUT : POST;
@@ -136,7 +136,7 @@ const CafeForm = () => {
             variant="contained"
             color="info"
             btnText="Submit"
-            disabled={isFormInvalid()}
+            disabled={isFormInvalid}
           />
         </Box>
       )}

@@ -77,7 +77,7 @@ const EmployeeCreateOrEdit = () => {
     return areRequiredFieldsEmpty;
   };
 
-  const isFormInvalid = () => checkFormErrors();
+  const isFormInvalid = checkFormErrors();
 
   const handleFormSubmit = async () => {
     const method = employeeId ? PUT : POST;
@@ -175,7 +175,7 @@ const EmployeeCreateOrEdit = () => {
               variant="contained"
               color="info"
               btnText="Submit"
-              disabled={isFormInvalid()}
+              disabled={isFormInvalid}
             />
           </Box>
         </Box>
