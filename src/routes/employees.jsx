@@ -4,12 +4,13 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import ReusableBtn from "../components/ReusableBtn";
 import DeleteModal from "../components/DeleteModal";
 import { setEmployeeIdToDelete } from "../employees/employeeSlice";
 import { useGetEmployeesByCafeQuery } from "../services/employees";
 import { EMPLOYEE_ENTITY } from "../constants";
+import { aggridCardContainer, centeredBox } from "../components/styles";
 
 const Employees = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,9 @@ const Employees = () => {
     {
       field: "edit",
       cellRenderer: (params) => (
-        <ReusableBtn variant="contained" color="info" btnText="Edit" />
+        <Link to={`/employees/${params.data._id}/edit/`}>
+          <ReusableBtn variant="contained" color="info" btnText="Edit" />
+        </Link>
       )
     },
     {
@@ -52,24 +55,8 @@ const Employees = () => {
 
   return (
     <Container sx={{ height: "100vh" }}>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%"
-        }}
-      >
-        <Card
-          sx={{
-            width: "100%",
-            padding: 2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center"
-          }}
-        >
+      <Box sx={centeredBox}>
+        <Card sx={aggridCardContainer}>
           <h1>Employees</h1>
           <Box
             sx={{
@@ -80,9 +67,21 @@ const Employees = () => {
             }}
           >
             <Box>
-              <Button sx={{ height: "100%" }} variant="contained" color="info">
-                Add New Employee
-              </Button>
+              <Link to={`/`}>
+                <ReusableBtn
+                  variant="outlined"
+                  color="info"
+                  btnText="Go Back"
+                  sx={{ mr: 2 }}
+                />
+              </Link>
+              <Link to={`/employees/new`}>
+                <ReusableBtn
+                  variant="contained"
+                  color="info"
+                  btnText="Add New Employee"
+                />
+              </Link>
             </Box>
           </Box>
           <DeleteModal
