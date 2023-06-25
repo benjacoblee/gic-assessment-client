@@ -67,13 +67,7 @@ const Employees = () => {
             }}
           >
             <Box>
-              <ReusableBtn
-                onClick={() => navigate(-1)}
-                variant="outlined"
-                color="info"
-                btnText="Go Back"
-                sx={{ mr: 2 }}
-              />
+              <ReusableBtn variant="outlined" color="info" sx={{ mr: 2 }} />
               <Link to={`/employees/new`}>
                 <ReusableBtn
                   variant="contained"

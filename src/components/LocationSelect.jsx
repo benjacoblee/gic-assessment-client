@@ -1,6 +1,6 @@
 import { Box, MenuItem, Select } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { setLocation } from "../cafe/cafeSlice";
 import { useGetCafesByLocationQuery } from "../services/cafes";
 import ReusableBtn from "./ReusableBtn";
@@ -10,7 +10,6 @@ const LocationSelect = () => {
   const locationOptions = useSelector((state) => state.cafes.locationOptions);
   const location = useSelector((state) => state.cafes.location);
   const { refetch: refetchCafes } = useGetCafesByLocationQuery(location);
-  const navigate = useNavigate();
 
   const handleLocationChange = async (e) => {
     const newLocation = e.target.value;
@@ -34,12 +33,9 @@ const LocationSelect = () => {
         })}
       </Select>
       <Box>
-        <ReusableBtn
-          onClick={() => navigate(-1)}
-          variant="outlined"
-          btnText="Go back"
-          sx={{ mr: 2 }}
-        />
+        <Link to="/">
+          <ReusableBtn variant="outlined" btnText="Home" sx={{ mr: 2 }} />
+        </Link>
         <ReusableBtn variant="contained" color="info" btnText="Add New Cafe" />
       </Box>
     </>
