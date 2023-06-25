@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   { path: "employees/new", element: <EmployeeCreateOrEdit /> },
   { path: "employees/:employeeId/edit", element: <EmployeeCreateOrEdit /> },
   { path: "cafes/new", element: <CafeCreateOrEdit /> },
-  { path: "cafes/:employeeId/edit", element: <CafeCreateOrEdit /> }
+  { path: "cafes/:cafeId/edit", element: <CafeCreateOrEdit /> }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
