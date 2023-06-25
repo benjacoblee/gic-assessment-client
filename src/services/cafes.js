@@ -27,8 +27,27 @@ export const cafesApi = createApi({
         });
       },
       invalidatesTags: ["Cafe", "Employee"]
+    }),
+    createOrEditCafe: build.mutation({
+      async queryFn(data) {
+        const { data: cafeData, method } = data;
+
+        return await fetch(`/api/cafe`, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          method,
+          body: JSON.stringify(cafeData)
+        });
+      },
+      invalidatesTags: ["Cafe", "Employee"]
     })
   })
 });
 
-export const { useGetCafesByLocationQuery, useDeleteCafeMutation } = cafesApi;
+export const {
+  useGetCafesByLocationQuery,
+  useDeleteCafeMutation,
+  useCreateOrEditCafeMutation
+} = cafesApi;
