@@ -4,6 +4,7 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   setCafeIdToDelete,
   setLocation,
@@ -52,8 +53,10 @@ const Cafes = () => {
     { field: "employees", cellRenderer: EmployeeLink },
     {
       field: "edit",
-      cellRenderer: () => (
-        <ReusableBtn variant="contained" color="info" btnText="Edit" />
+      cellRenderer: (params) => (
+        <Link to={`/cafes/${params.data._id}/edit`}>
+          <ReusableBtn variant="contained" color="info" btnText="Edit" />
+        </Link>
       )
     },
     {

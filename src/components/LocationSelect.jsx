@@ -36,7 +36,13 @@ const LocationSelect = () => {
         <Link to="/">
           <ReusableBtn variant="outlined" btnText="Home" sx={{ mr: 2 }} />
         </Link>
-        <ReusableBtn variant="contained" color="info" btnText="Add New Cafe" />
+        <Link to="/cafes/new">
+          <ReusableBtn
+            variant="contained"
+            color="info"
+            btnText="Add New Cafe"
+          />
+        </Link>
       </Box>
     </>
   );

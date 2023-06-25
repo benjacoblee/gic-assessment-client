@@ -1,7 +1,7 @@
 import EmployeeForm from "../components/EmployeeForm";
 
-const EmployeePage = () => {
+const EmployeeCreateOrEdit = () => {
   return <EmployeeForm />;
 };
 
-export default EmployeePage;
+export default EmployeeCreateOrEdit;
