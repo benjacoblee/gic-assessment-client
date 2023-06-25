@@ -4,7 +4,7 @@ import "ag-grid-community/styles/ag-theme-alpine.css";
 import { AgGridReact } from "ag-grid-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import DeleteModal from "../components/DeleteModal";
 import ReusableBtn from "../components/ReusableBtn";
 import { aggridCardContainer, centeredBox } from "../components/styles";
@@ -17,7 +17,6 @@ const Employees = () => {
   const [searchParams] = useSearchParams();
   const cafe = searchParams.get("cafe") || "";
   const { data: employeesByCafe, isLoading } = useGetEmployeesByCafeQuery(cafe);
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   const [columnDefs] = useState([
@@ -67,7 +66,14 @@ const Employees = () => {
             }}
           >
             <Box>
-              <ReusableBtn variant="outlined" color="info" sx={{ mr: 2 }} />
+              <Link to="/">
+                <ReusableBtn
+                  variant="outlined"
+                  color="info"
+                  sx={{ mr: 2 }}
+                  btnText="Home"
+                />
+              </Link>
               <Link to={`/employees/new`}>
                 <ReusableBtn
                   variant="contained"
