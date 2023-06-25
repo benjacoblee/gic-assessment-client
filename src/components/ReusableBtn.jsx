@@ -1,25 +1,23 @@
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import PropTypes from "prop-types";
 
-const ReusableBtn = (props) => {
+const ReusableBtn = ({ btnText, ...props }) => {
   return (
-    <Box>
-      <Button
-        onClick={props.onClick}
-        variant={props.variant}
-        color={props.color}
-        {...props}
-      >
-        {props.btnText}
-      </Button>
-    </Box>
+    <Button
+      onClick={props.onClick}
+      variant={props.variant}
+      color={props.color}
+      {...props}
+    >
+      {btnText}
+    </Button>
   );
 };
 
 ReusableBtn.propTypes = {
   onClick: PropTypes.func,
   variant: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
+  color: PropTypes.string,
   btnText: PropTypes.string.isRequired
 };
 
