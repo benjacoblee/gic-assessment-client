@@ -21,4 +21,4 @@
 - Ensure `node_modules` with `npm i`
 - `npm run dev`
 
-Navigate to `http://localhost:5173/` to view the project in the browser.
+Assuming that the `server` is already running, the project is ready. Navigate to `http://localhost:5173/` to view the project in the browser.
