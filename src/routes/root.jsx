@@ -1,6 +1,12 @@
-import { Box, Container } from "@mui/material";
+import { Box, Container, Card } from "@mui/material";
 import { Link } from "react-router-dom";
+import ReusableBtn from "../components/ReusableBtn";
 import "../global.css";
+import {
+  aggridCardContainer,
+  centeredBox,
+  locationOptionsBox
+} from "../components/styles";
 
 export default function Root() {
   return (
@@ -13,15 +19,22 @@ export default function Root() {
           alignItems="center"
           height="100%"
         >
-          <Box>
-            <h1>
-              <Link to={"cafes"}>Cafes</Link>
-            </h1>
-          </Box>
-          <Box>
-            <h1>
-              <Link to={"employees"}>Employees</Link>
-            </h1>
+          <Box component="h1">Cafe Employees</Box>
+          <Box sx={{ display: "flex" }}>
+            <Box sx={{ mr: 2 }}>
+              <Link to={"/cafes"}>
+                <ReusableBtn variant="contained" color="info" btnText="Cafes" />
+              </Link>
+            </Box>
+            <Box>
+              <Link to={"/employees"}>
+                <ReusableBtn
+                  variant="outlined"
+                  color="info"
+                  btnText="Employees"
+                />
+              </Link>
+            </Box>
           </Box>
         </Box>
       </Container>
