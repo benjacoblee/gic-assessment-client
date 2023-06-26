@@ -1,12 +1,12 @@
-import { Box, Container } from "@mui/material";
-import { useEffect } from "react";
+import { Box, Container, InputLabel } from "@mui/material";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { setCafeFormValues } from "../cafe/cafeSlice";
 import CustomInput from "../components/CustomInput";
 import ReusableBtn from "../components/ReusableBtn";
 import { centeredBox, customInputStyles } from "../components/styles";
-import { ALL, POST, PUT } from "../constants";
+import { ALL, MEGABYTE, POST, PUT } from "../constants";
 import {
   useCreateOrEditCafeMutation,
   useGetCafesByLocationQuery
@@ -30,6 +30,11 @@ const CafeForm = () => {
   const navigate = useNavigate();
 
   const { _id, name, description, location } = cafeFormValues;
+  const [fileData, setFileData] = useState({
+    file: {},
+    errors: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (!isCafesLoading) {
@@ -65,7 +70,8 @@ const CafeForm = () => {
       return (
         validateCafeName.isError(name) ||
         validateCafeDescription.isError(description) ||
-        validateCafeLocation.isError(location)
+        validateCafeLocation.isError(location) ||
+        !!fileData.errors
       );
     }
 
@@ -74,21 +80,38 @@ const CafeForm = () => {
 
   const isFormInvalid = checkFormErrors();
 
+  const handleUploadInputChange = (e) => {
+    if (e.target.files[0]) {
+      const file = e.target.files[0];
+      const sizeInBytes = e.target.files[0].size;
+      const sizeInMB = sizeInBytes / MEGABYTE;
+
+      if (sizeInMB < 1) {
+        setFileData({ ...fileData, file, errors: "" });
+      } else {
+        setFileData({
+          file: {},
+          errors: "File needs to be less than 1 MB"
+        });
+      }
+    }
+  };
+
   const handleFormSubmit = async () => {
     const method = cafeId ? PUT : POST;
-
+    setIsSubmitting(true);
     await createOrEditCafe({
       data: {
         _id,
         name,
         description,
-        location
+        location,
+        file: fileData.file
       },
       method
     });
-
     refetchCafes(ALL);
-
+    setIsSubmitting(false);
     navigate("/cafes");
   };
 
@@ -130,13 +153,48 @@ const CafeForm = () => {
             sx={customInputStyles}
             validator={validateCafeLocation}
           />{" "}
+          <Box
+            component="input"
+            accept="image/*"
+            style={{ display: "none" }}
+            id="raised-button-file"
+            multiple={false}
+            type="file"
+            onChange={handleUploadInputChange}
+          />
+          <Box
+            sx={{
+              ...customInputStyles,
+              display: "flex",
+              flexDirection: "column"
+            }}
+          >
+            <InputLabel
+              sx={{ display: "flex", flexDirection: "column" }}
+              htmlFor="raised-button-file"
+            >
+              <ReusableBtn
+                variant="outlined"
+                color="secondary"
+                component="div"
+                btnText="Upload"
+                htmlFor="raised-button-file"
+                sx={{ mb: 2 }}
+              />{" "}
+              {fileData.errors ? (
+                <Box sx={{ textAlign: "center" }}>{fileData.errors}</Box>
+              ) : (
+                <Box sx={{ textAlign: "center" }}>{fileData.file.name}</Box>
+              )}
+            </InputLabel>
+          </Box>
           <ReusableBtn
             onClick={handleFormSubmit}
             sx={{ display: "inline-block" }}
             variant="contained"
             color="info"
-            btnText="Submit"
-            disabled={isFormInvalid}
+            btnText={isSubmitting ? "Submitting..." : "Submit"}
+            disabled={isFormInvalid || isSubmitting}
           />
         </Box>
       )}

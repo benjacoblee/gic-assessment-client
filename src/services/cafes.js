@@ -32,13 +32,20 @@ export const cafesApi = createApi({
       async queryFn(data) {
         const { data: cafeData, method } = data;
 
+        const formData = new FormData();
+
+        for (const [key, value] of Object.entries(cafeData)) {
+          if (value) {
+            formData.append(key, value);
+          }
+        }
+
         return await fetch(`/api/cafe`, {
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
+            Accept: "application/json"
           },
           method,
-          body: JSON.stringify(cafeData)
+          body: formData
         });
       },
       invalidatesTags: ["Cafe", "Employee"]

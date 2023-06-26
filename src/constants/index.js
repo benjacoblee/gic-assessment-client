@@ -9,6 +9,8 @@ const VALID_GENDERS = ["Male", "Female"];
 const ALL = "All";
 const PUT = "PUT";
 const POST = "POST";
+const KILOBYTE = 1024;
+const MEGABYTE = KILOBYTE * KILOBYTE;
 
 export {
   EMPLOYEE_ENTITY,
@@ -21,5 +23,6 @@ export {
   VALID_GENDERS,
   ALL,
   PUT,
-  POST
+  POST,
+  MEGABYTE
 };

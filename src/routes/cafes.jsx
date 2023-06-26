@@ -47,6 +47,21 @@ const Cafes = () => {
 
   const [columnDefs] = useState([
     { field: "_id", headerName: "ID" },
+    {
+      field: "logoUrl",
+      headerName: "Logo",
+      cellRenderer: (params) => {
+        return (
+          params.data.logoUrl && (
+            <Box
+              component="img"
+              src={params.data.logoUrl}
+              sx={{ height: "1rem" }}
+            />
+          )
+        );
+      }
+    },
     { field: "name" },
     { field: "description" },
     { field: "location" },
